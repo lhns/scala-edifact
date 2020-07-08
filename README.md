@@ -1,2 +1,5 @@
 # scala-edifact
-An Edifact parser library written in scala
+A small Edifact parser library written in scala
+
+## License
+This project uses the Apache 2.0 License. See the file called LICENSE.
