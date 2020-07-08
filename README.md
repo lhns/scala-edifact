@@ -5,5 +5,10 @@
 
 A small Edifact parser library written in scala
 
+### build.sbt
+```sbt
+libraryDependencies += "de.lolhens" %% "scala-edifact" % "0.0.2"
+```
+
 ## License
 This project uses the Apache 2.0 License. See the file called LICENSE.
