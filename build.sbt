@@ -2,7 +2,7 @@ organization := "de.lolhens"
 name := "scala-edifact"
 version := "0.0.1-SNAPSHOT"
 
-scalaVersion := "2.13.3"
+scalaVersion := "2.13.5"
 crossScalaVersions := Seq("2.12.13", scalaVersion.value)
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0"))
