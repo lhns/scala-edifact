@@ -2,7 +2,7 @@ organization := "de.lolhens"
 name := "scala-edifact"
 version := "0.0.1-SNAPSHOT"
 
-scalaVersion := "2.13.9"
+scalaVersion := "2.13.10"
 crossScalaVersions := Seq("2.12.17", scalaVersion.value)
 
 ThisBuild / versionScheme := Some("early-semver")
