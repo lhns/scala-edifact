@@ -21,7 +21,7 @@ developers := List(
 )
 
 libraryDependencies ++= Seq(
-  "com.lihaoyi" %% "fastparse" % "2.3.3",
+  "com.lihaoyi" %% "fastparse" % "3.0.0",
 )
 
 addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
