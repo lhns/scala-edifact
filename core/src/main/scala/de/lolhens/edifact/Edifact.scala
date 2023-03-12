@@ -96,26 +96,26 @@ object Edifact {
     private val release = serviceStringAdvice.releaseChar.toString
     private val segmentTerminator = serviceStringAdvice.segmentTerminatorChar.toString
 
-    def elementReservedChar[_: P]: P[Unit] = P {
+    def elementReservedChar[$: P]: P[Unit] = P {
       CharPred((componentSeparator + elementSeparator + segmentTerminator).contains(_))
     }
 
-    def elementChar[_: P]: P[String] = P {
+    def elementChar[$: P]: P[String] = P {
       release ~ elementReservedChar.! |
         !elementReservedChar ~ AnyChar.!
     }
 
-    def elementString[_: P]: P[String] = P {
+    def elementString[$: P]: P[String] = P {
       elementChar.rep.map(e => e.mkString)
     }
 
-    def composite[_: P]: P[Composite] = P {
+    def composite[$: P]: P[Composite] = P {
       elementString.rep(sep = componentSeparator).map { elements =>
         Composite(elements.map(Element).toList)
       }
     }
 
-    def segmentReservedTags[_: P]: P[Unit] = P {
+    def segmentReservedTags[$: P]: P[Unit] = P {
       StringIn(
         ServiceStringAdvice.tag,
         Message.headerTag,
@@ -127,18 +127,18 @@ object Edifact {
       )
     }
 
-    def segmentTag[_: P]: P[String] = P {
+    def segmentTag[$: P]: P[String] = P {
       !segmentReservedTags ~ elementString
     }
 
-    def segment[_: P](tag: => P[String] = null): P[Segment] = P {
+    def segment[$: P](tag: => P[String] = null): P[Segment] = P {
       (Option(tag).getOrElse(segmentTag) ~ (elementSeparator ~/ composite).rep).map {
         case (tag, composites) =>
           Segment(tag, composites.toList)
       } ~ segmentTerminator ~ s.rep
     }
 
-    def message[_: P]: P[Message] = P {
+    def message[$: P]: P[Message] = P {
       (segment(Message.headerTag.!) ~/
         segment().rep ~
         segment(Message.trailerTag.!)).map {
@@ -147,7 +147,7 @@ object Edifact {
       }
     }
 
-    def group[_: P]: P[Group] = P {
+    def group[$: P]: P[Group] = P {
       (segment(Group.headerTag.!) ~/
         message.rep ~
         segment(Group.trailerTag.!)).map {
@@ -156,7 +156,7 @@ object Edifact {
       }
     }
 
-    def envelope[_: P]: P[Envelope] = P {
+    def envelope[$: P]: P[Envelope] = P {
       (segment(Envelope.headerTag.!) ~/
         (group | message.map(message => Group(None, List(message)))).rep ~
         segment(Envelope.trailerTag.!)).map {
@@ -167,9 +167,9 @@ object Edifact {
   }
 
   private object Parser {
-    def s[_: P]: P[Unit] = CharPred(_.isWhitespace)
+    def s[$: P]: P[Unit] = CharPred(_.isWhitespace)
 
-    def serviceStringAdvice[_: P]: P[ServiceStringAdvice] = P {
+    def serviceStringAdvice[$: P]: P[ServiceStringAdvice] = P {
       ServiceStringAdvice.tag ~/ (AnyChar.rep(exactly = 4).! ~ " " ~ AnyChar.!).map { una =>
         val List(
         componentSeparator,
@@ -189,7 +189,7 @@ object Edifact {
       } ~ s.rep
     }
 
-    def parser[_: P]: P[Envelope] = P {
+    def parser[$: P]: P[Envelope] = P {
       Start ~
         (serviceStringAdvice ~/ "").?
           .map(_.getOrElse(ServiceStringAdvice.default))
