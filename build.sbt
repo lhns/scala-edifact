@@ -97,7 +97,7 @@ lazy val core = projectMatrix.in(file("core"))
     name := "scala-edifact",
 
     libraryDependencies ++= Seq(
-      "com.lihaoyi" %% "fastparse" % V.fastparse,
+      "com.lihaoyi" %%% "fastparse" % V.fastparse,
     ),
   )
   .jvmPlatform(scalaVersions)
