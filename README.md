@@ -10,7 +10,7 @@ A small Edifact parser library written in scala.
 
 ### build.sbt
 ```sbt
-libraryDependencies += "de.lhns" %% "scala-edifact" % "0.0.2"
+libraryDependencies += "de.lhns" %% "scala-edifact" % "0.1.0"
 ```
 
 ## License
